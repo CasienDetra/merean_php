@@ -1,6 +1,6 @@
 <?php
 /* for connect to database */
-include 'index.php'; // Ensure this file defines $pdo
+include 'index.php';
 
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $page = ($page < 1) ? 1 : $page;
