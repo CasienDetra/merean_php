@@ -14,17 +14,19 @@ $data = [
         'email' => 'hell89hh@gmail.com',
     ],
 ];
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    foreach ($data as $row) {
-        if ($row['id'] == $id) {
-            echo json_encode($row);
-            exit;
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        foreach ($data as $row) {
+            if ($row['id'] == $id) {
+                echo json_encode($row);
+                exit;
+            }
         }
+        echo json_encode(['message' => 'data not found']);
+    } else {
+        echo json_encode($data, JSON_PRETTY_PRINT);
     }
-    echo json_encode(['message' => 'data not found']);
-} else {
-    echo json_encode($data);
 }
 // convert data to json
 echo json_encode($data, JSON_PRETTY_PRINT);
