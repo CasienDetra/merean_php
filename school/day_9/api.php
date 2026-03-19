@@ -34,8 +34,33 @@ switch ($method) {
             echo json_encode(['error' => 'Missing required fields (name, price)']);
         }
         break;
+    case 'PUT':
+        $data = json_decode(file_get_contents('php://input'), true);
+        if (isset($data['id']) && isset($data['name']) && isset($data['price']) && isset($data['description'])) {
+            $sql = $pdo->prepare('UPDATE products SET name = :name, price = :price, description = :description WHERE product_id = :id');
+            $sql->execute([
+                'name' => $data['name'],
+                'price' => $data['price'],
+                'description' => $data['description'],
+                'id' => $data['id'],
+            ]);
+            echo json_encode(['message' => 'product created successfully', 'product_id' => $pdo->lastInsertId()]);
+        } else {
+            echo json_encode(['error' => 'Missing required fields (name, price)']);
+        }
+        break;
+    case 'DELETE':
+        $id = $_GET['id'] ?? null;
+        if (isset($id)) {
+            $sql = $pdo->prepare('UPDATE products set is_deleted = 1 where product_id = ?');
+            $sql->execute($id);
+            echo json_encode(['message' => 'product deleted ']);
+        } else {
+            echo json_encode(['error' => 'Product id is required']);
+        }
+        break;
     default:
-        // code...
+        echo json_encode(['error' => 'Invalid request method']);
         break;
 }
 echo json_encode('Api key is working');
