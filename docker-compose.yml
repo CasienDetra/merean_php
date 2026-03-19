@@ -14,6 +14,12 @@ services:
     image: php:8.1-fpm
     volumes:
       - ./www:/var/www/html
+  composer:
+    image: composer:latest
+    volumes:
+      - ./www:/app
+    working_dir: /app
+    command: composer install
   db:
     image: mysql:8.0
     environment:
