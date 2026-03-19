@@ -14,4 +14,4 @@
 | Tech Stack  | Single lang/framework | Multiple langs/frameworks |
 
 - write a simple microservice with slim php
-
+- run docker and install one with composer use 
